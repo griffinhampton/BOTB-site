@@ -132,7 +132,7 @@ dracoLoader.setDecoderPath("https://unpkg.com/three@0.160.0/examples/jsm/libs/dr
 loader.setDRACOLoader(dracoLoader);
 let mixer;
 loader.load(
-  "./ship.gltf",
+  new URL("./ship.gltf", import.meta.url).toString(),
   (gltf) => {
     const model = gltf.scene;
     shipRoot = model;
