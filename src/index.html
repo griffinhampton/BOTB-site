@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BOTB</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #05060a;
+      }
+      #app {
+        width: 100%;
+        height: 100%;
+      }
+      canvas {
+        display: block;
+      }
+      #overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #e9eef5;
+        font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+        background: rgba(5, 6, 10, 0.55);
+        cursor: pointer;
+        user-select: none;
+      }
+      #overlay.hidden {
+        display: none;
+      }
+      #hint {
+        font-size: 0.95rem;
+        text-align: center;
+        line-height: 1.5;
+        padding: 16px 24px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        background: rgba(8, 12, 20, 0.75);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="overlay">
+      <div id="hint">
+        Click to lock pointer<br />
+        WASD to move · Space / Shift to rise or descend · Esc to unlock
+      </div>
+    </div>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
