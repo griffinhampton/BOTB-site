@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BOTB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script type="importmap">
       {
         "imports": {
@@ -18,51 +22,196 @@
         padding: 0;
         width: 100%;
         height: 100%;
+        height: 100vh;
+        height: 100dvh; /* Use dynamic viewport height for mobile */
         overflow: hidden;
-        background: #05060a;
+        background: #000000;
+        position: fixed;
       }
       #app {
         width: 100%;
         height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
       }
       canvas {
         display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
       }
-      #overlay {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #e9eef5;
-        font-family: system-ui, -apple-system, Segoe UI, sans-serif;
-        background: rgba(5, 6, 10, 0.55);
+      #canvasWatermark {
+        position: fixed;
+        top: 43%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+        pointer-events: none;
+        font-family: 'VT323', monospace;
+        color: #ffffff;
+        user-select: none;
+        mix-blend-mode: normal;
+        text-align: center;
+        width: 100vw;
+        opacity: 1;
+        transition: opacity 0.8s ease-in-out;
+      }
+      #canvasWatermark .watermark-title {
+        font-size: 12vw;
+        letter-spacing: 0.5vw;
+        font-weight: 700;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      #canvasWatermark .watermark-sub {
+        font-size: 4vw;
+        letter-spacing: 0.2vw;
+        opacity: 0.95;
+        margin-top: 1vh;
+        white-space: nowrap;
+      }
+      /* Simple text buttons */
+      .nav-button {
+        position: fixed;
+        z-index: 10;
+        color: #ffffff;
+        font-family: 'VT323', monospace;
+        font-size: 200%;
         cursor: pointer;
         user-select: none;
+        text-transform: uppercase;
+        letter-spacing: 2px;
       }
-      #overlay.hidden {
+      .nav-button:hover {
+        opacity: 0.7;
+      }
+      /* Top buttons */
+      #info-button {
+        top: 20px;
+        left: 20px;
+      }
+      #apply-button {
+        top: 20px;
+        right: 20px;
+      }
+      /* Bottom buttons */
+      #band1-button {
+        bottom: 20px;
+        left: 20px;
+      }
+      #explore-button {
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      #band2-button {
+        bottom: 20px;
+        right: 20px;
+      }
+      /* Popup modal */
+      #popup-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+        background: rgba(0, 0, 0, 0.95);
+        border: 2px solid #ffffff;
+        padding: 40px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
         display: none;
+        font-family: 'VT323', monospace;
+        color: #ffffff;
       }
-      #hint {
-        font-size: 0.95rem;
-        text-align: center;
-        line-height: 1.5;
-        padding: 16px 24px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 12px;
-        background: rgba(8, 12, 20, 0.75);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+      #popup-modal.show {
+        display: block;
       }
+      #popup-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #ffffff;
+        line-height: 1;
+      }
+      #popup-close:hover {
+        opacity: 0.7;
+      }
+      #popup-content {
+        font-size: 1.2rem;
+        line-height: 1.6;
+      }
+      #popup-content h2 {
+        font-size: 2rem;
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+      }
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 80px);
+  z-index: 1;
+  width: fit-content;
+  font-weight: bold;
+  font-family: monospace;
+  white-space: pre;
+  color: whitesmoke;
+  font-size: 30px;
+  line-height: 1.2em;
+  height: 1.2em;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+.loader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.loader:before {
+  content:"Loading...\A⌰oading...\A⌰⍜ading...\A⌰⍜⏃ding...\A⌰⍜⏃⎅ing...\A⌰⍜⏃⎅⟟ng...\A⌰⍜⏃⎅⟟⋏g...\A⌰⍜⏃⎅⟟⋏☌...\A⌰⍜⏃⎅⟟⋏☌⟒..\A⌰⍜⏃⎅⟟⋏☌⟒⏁.\A⌰⍜⏃⎅⟟⋏☌⟒⏁⋔"; 
+  white-space: pre;
+  display: inline-block;
+  animation: l39 1s infinite steps(11) alternate;
+}
+
+@keyframes l39 {
+  100%{transform: translateY(-100%)}
+}
     </style>
   </head>
   <body>
+    <div id="canvasWatermark" aria-hidden="true">
+      <div class="watermark-title">BATTLE OF THE BANDS 2026</div>
+      <div class="watermark-sub">FEB 26 @ THE RED BARN - UOFL</div>
+    </div>
+    <div class="loader"></div>   
     <div id="app"></div>
-    <div id="overlay">
-      <div id="hint">
-        Click to lock pointer<br />
-        WASD to move · Space / Shift to rise or descend · Esc to unlock
+    
+    <div id="info-button" class="nav-button">(info)</div>
+    <div id="apply-button" class="nav-button">(apply)</div>
+    <div id="band1-button" class="nav-button">(band1)</div>
+    <div id="band2-button" class="nav-button">(band2)</div>
+    <div id="explore-button" class="nav-button">(explore)</div>
+    
+    <!-- Popup Modal -->
+    <div id="popup-modal">
+      <div id="popup-close">×</div>
+      <div id="popup-content">
+        <!-- Content will be filled dynamically -->
       </div>
     </div>
+    
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>
