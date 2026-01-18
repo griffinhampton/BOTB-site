@@ -132,7 +132,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.physicallyCorrectLights = !isMobile;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = isMobile ? 0.8 : 0.0005; //NEVER CHANGE THIS
+renderer.toneMappingExposure = 0.4; //NEVER CHANGE THIS
 renderer.shadowMap.enabled = false; // Only enabled in explore mode.
 renderer.shadowMap.type = THREE.PCFShadowMap;
 app.appendChild(renderer.domElement);

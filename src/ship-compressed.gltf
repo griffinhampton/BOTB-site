@@ -22,51 +22,41 @@
       "lights": [
         {
           "color": [
-            0.19311371445655823,
-            0.36051738262176514,
+            0.04844802990555763,
+            0.4069277048110962,
             1
           ],
-          "intensity": 177298.6943069073,
+          "intensity": 135.83128854697853,
           "type": "point",
           "name": "Light"
         },
         {
           "color": [
-            0.11609354615211487,
-            0.6050676107406616,
-            1
+            0.06415200233459473,
+            1,
+            0.7796406745910645
           ],
-          "intensity": 54351.41306588226,
+          "intensity": 135.87854562309232,
           "type": "point",
           "name": "Light.001"
         },
         {
           "color": [
-            0.958777666091919,
-            0.9020266532897949,
+            0.06419312953948975,
+            0.10157859325408936,
             1
           ],
-          "intensity": 31912.986617835544,
+          "intensity": 143.5097838707987,
           "type": "point",
           "name": "Area"
         },
         {
           "color": [
-            0.1572108119726181,
-            0.18826019763946533,
+            0.0565633624792099,
+            0.05383938550949097,
             1
           ],
-          "intensity": 5614.260182380676,
-          "type": "directional",
-          "name": "Sun"
-        },
-        {
-          "color": [
-            0.30717116594314575,
-            0.28543156385421753,
-            1
-          ],
-          "intensity": 7777.686712125704,
+          "intensity": 40.763559799411695,
           "type": "point",
           "name": "Point"
         }
@@ -178,8 +168,7 @@
         97,
         98,
         99,
-        100,
-        101
+        100
       ]
     }
   ],
@@ -1486,30 +1475,6 @@
           "light": 3
         }
       },
-      "name": "Sun",
-      "rotation": [
-        -0.27964845299720764,
-        -0.16596180200576782,
-        0.5261194109916687,
-        0.7857810258865356
-      ],
-      "translation": [
-        -58.365623474121094,
-        32.28224182128906,
-        101.31027221679688
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "extensions": {
-        "KHR_lights_punctual": {
-          "light": 4
-        }
-      },
       "name": "Point",
       "rotation": [
         -0.7071068286895752,
@@ -2028,7 +1993,7 @@
         {
           "sampler": 0,
           "target": {
-            "node": 92,
+            "node": 91,
             "path": "scale"
           }
         }
@@ -2047,7 +2012,7 @@
         {
           "sampler": 0,
           "target": {
-            "node": 93,
+            "node": 92,
             "path": "scale"
           }
         }
@@ -2066,7 +2031,7 @@
         {
           "sampler": 0,
           "target": {
-            "node": 95,
+            "node": 94,
             "path": "scale"
           }
         }
@@ -2085,21 +2050,21 @@
         {
           "sampler": 0,
           "target": {
-            "node": 97,
+            "node": 96,
             "path": "translation"
           }
         },
         {
           "sampler": 1,
           "target": {
-            "node": 97,
+            "node": 96,
             "path": "rotation"
           }
         },
         {
           "sampler": 2,
           "target": {
-            "node": 97,
+            "node": 96,
             "path": "scale"
           }
         }
@@ -2128,21 +2093,21 @@
         {
           "sampler": 0,
           "target": {
-            "node": 98,
+            "node": 97,
             "path": "translation"
           }
         },
         {
           "sampler": 1,
           "target": {
-            "node": 98,
+            "node": 97,
             "path": "rotation"
           }
         },
         {
           "sampler": 2,
           "target": {
-            "node": 98,
+            "node": 97,
             "path": "scale"
           }
         }
@@ -2171,21 +2136,21 @@
         {
           "sampler": 0,
           "target": {
-            "node": 99,
+            "node": 98,
             "path": "translation"
           }
         },
         {
           "sampler": 1,
           "target": {
-            "node": 99,
+            "node": 98,
             "path": "rotation"
           }
         },
         {
           "sampler": 2,
           "target": {
-            "node": 99,
+            "node": 98,
             "path": "scale"
           }
         }
@@ -2214,21 +2179,21 @@
         {
           "sampler": 0,
           "target": {
-            "node": 100,
+            "node": 99,
             "path": "translation"
           }
         },
         {
           "sampler": 1,
           "target": {
-            "node": 100,
+            "node": 99,
             "path": "rotation"
           }
         },
         {
           "sampler": 2,
           "target": {
-            "node": 100,
+            "node": 99,
             "path": "scale"
           }
         }
@@ -3103,7 +3068,7 @@
       ],
       "extensions": {
         "KHR_materials_emissive_strength": {
-          "emissiveStrength": 1026
+          "emissiveStrength": 5
         }
       },
       "name": "glow",
@@ -3192,7 +3157,7 @@
       ],
       "extensions": {
         "KHR_materials_emissive_strength": {
-          "emissiveStrength": 807.861225189863
+          "emissiveStrength": 6.001941114664078
         }
       },
       "name": "Material.005",
