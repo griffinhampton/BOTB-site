@@ -94,7 +94,7 @@
       }
       @media (max-width: 600px) {
         .nav-button {
-          font-size: 1.1rem;
+          font-size: 2rem;
           letter-spacing: 0.2px;
           padding: 0.15em 0.5em;
         }
@@ -110,14 +110,14 @@
         opacity: 0.7;
       }
       /* Top buttons */
-      #info-button {
+      #info-button,
+      #apply-button,
+      #mute-button {
         top: 20px;
-        left: 20px;
       }
-      #apply-button {
-        top: 20px;
-        right: 20px;
-      }
+      #info-button { left: 20px; }
+      #apply-button { right: 20px; }
+      #mute-button { left: 50%; transform: translateX(-50%); }
       /* Bottom buttons */
       #band1-button {
         bottom: 20px;
