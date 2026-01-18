@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script type="importmap">
       {
@@ -17,6 +18,9 @@
       }
     </script>
     <style>
+            * {
+              font-family: 'VT323', monospace !important;
+            }
       html, body {
         margin: 0;
         padding: 0;
@@ -52,7 +56,7 @@
         transform: translate(-50%, -50%);
         z-index: -1;
         pointer-events: none;
-        font-family: 'VT323', monospace;
+          font-family: 'Cinzel', serif, Arial, sans-serif;
         color: #ffffff;
         user-select: none;
         mix-blend-mode: normal;
@@ -80,14 +84,29 @@
         position: fixed;
         z-index: 10;
         color: #ffffff;
-        font-family: 'Engravers MT', EngraversMT, serif, Arial, sans-serif;
-        font-size: 200%;
-        cursor: pointer;
-        user-select: none;
-        text-transform: uppercase;
-        letter-spacing: 2px;
+          font-size: 3.2rem;
+          cursor: pointer;
+          user-select: none;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          padding: 0.3em 1em;
+          transition: color 0.2s;
       }
-      .nav-button:hover {
+      @media (max-width: 600px) {
+        .nav-button {
+          font-size: 1.1rem;
+          letter-spacing: 0.2px;
+          padding: 0.15em 0.5em;
+        }
+      }
+      @media (min-width: 601px) {
+        .nav-button {
+          font-size: 3.2rem;
+        }
+      }
+              #mute-button.muted {
+                color: #ff3333 !important;
+              }
         opacity: 0.7;
       }
       /* Top buttons */
@@ -152,13 +171,13 @@
         line-height: 1.6;
       }
       #popup-content h1 {
-        font-family: 'Engravers MT', EngraversMT, serif, Arial, sans-serif !important;
+        font-family: 'Cinzel', serif, Arial, sans-serif !important;
         font-size: 4.2rem;
         font-weight: 700;
         margin-bottom: 0.7em;
       }
       #popup-content h2 {
-        font-family: 'Engravers MT', EngraversMT, serif, Arial, sans-serif !important;
+        font-family: 'Cinzel', serif, Arial, sans-serif !important;
       }
       #popup-content p {
         font-size: 0.95rem;
@@ -174,7 +193,7 @@
         letter-spacing: 3px;
       }
       #popup-content h3 {
-        font-family: 'Engravers MT', EngraversMT, serif, Arial, sans-serif !important;
+        font-family: 'Cinzel', serif, Arial, sans-serif !important;
         font-weight: 700;
         letter-spacing: 0.5px;
       }
@@ -202,7 +221,7 @@
         font-style: normal;
       }
       #popup-content h1, #popup-content h3 {
-        font-family: 'Engravers MT', EngraversMT, serif, Arial, sans-serif !important;
+          font-family: 'Cinzel', serif, Arial, sans-serif !important;
         font-weight: 700;
         letter-spacing: 0.5px;
       }
@@ -308,6 +327,7 @@
     <div id="app" style="display:none;"></div>
     
     <div id="info-button" class="nav-button" style="display:none;">(info)</div>
+    <div id="mute-button" class="nav-button" style="display:none;left:calc(50% - 60px);top:20px;transform:none;">(mute)</div>
     <div id="apply-button" class="nav-button" style="display:none;">(apply)</div>
     <div id="band1-button" class="nav-button" style="display:none;">(TBA1)</div>
     <div id="band2-button" class="nav-button" style="display:none;">(TBA2)</div>
@@ -375,6 +395,7 @@
           // Show nav buttons
           [
             'info-button',
+            'mute-button',
             'apply-button',
             'band1-button',
             'band2-button',

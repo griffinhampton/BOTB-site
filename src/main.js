@@ -1,3 +1,34 @@
+// --- Mute button logic ---
+const muteButton = document.getElementById('mute-button');
+let isMuted = false;
+// Make audioEl global for mute logic
+window.setTimeout(() => {
+  if (typeof audioEl === 'undefined') window.audioEl = null;
+}, 0);
+function setMuteState(mute) {
+  isMuted = mute;
+  if (window.audioEl) {
+    window.audioEl.volume = mute ? 0 : 0.5;
+    if (mute) {
+      window.audioEl.pause();
+    } else {
+      window.audioEl.play().catch(()=>{});
+    }
+  }
+  if (muteButton) {
+    if (mute) {
+      muteButton.classList.add('muted');
+      muteButton.textContent = '(UNMUTE)';
+    } else {
+      muteButton.classList.remove('muted');
+      muteButton.textContent = '(MUTE)';
+    }
+  }
+}
+
+if (muteButton) {
+  muteButton.addEventListener('click', () => setMuteState(!isMuted));
+}
 import * as THREE from "three";
 import { PointerLockControls } from "three/addons/controls/PointerLockControls.js";
 import MovementPad from "./MovementPad.js";
