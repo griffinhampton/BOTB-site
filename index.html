@@ -83,7 +83,17 @@
       .nav-button {
         position: fixed;
         z-index: 10;
-        color: #ffffff;
+        color: #fff;
+        /* Remove blend mode for strict monochrome */
+        text-shadow:
+          2px 2px 0 #000,
+         -2px 2px 0 #000,
+          2px -2px 0 #000,
+         -2px -2px 0 #000,
+          0 2px 0 #000,
+          2px 0 0 #000,
+          0 -2px 0 #000,
+         -2px 0 0 #000;
           font-size: 3.2rem;
           cursor: pointer;
           user-select: none;
@@ -350,24 +360,27 @@
         'public/thegard.mp3'
         // Add more file paths as needed
       ];
-      let audioEl = null;
+      window.isMuted = false;
+      window.audioEl = null;
       function playRandomSong(forceNew) {
         const idx = Math.floor(Math.random() * musicFiles.length);
         const src = musicFiles[idx];
-        if (!audioEl || forceNew) {
-          if (audioEl && audioEl.parentNode) audioEl.parentNode.removeChild(audioEl);
-          audioEl = document.createElement('audio');
-          audioEl.style.display = 'none';
-          audioEl.autoplay = true;
-          audioEl.loop = false;
-          audioEl.preload = 'none'; // lazy-load
-          audioEl.volume = 0.5;
-          document.body.appendChild(audioEl);
-          audioEl.addEventListener('ended', () => playRandomSong(true));
+        if (!window.audioEl || forceNew) {
+          if (window.audioEl && window.audioEl.parentNode) window.audioEl.parentNode.removeChild(window.audioEl);
+          window.audioEl = document.createElement('audio');
+          window.audioEl.style.display = 'none';
+          window.audioEl.autoplay = true;
+          window.audioEl.loop = false;
+          window.audioEl.preload = 'none'; // lazy-load
+          window.audioEl.volume = window.isMuted ? 0 : 0.5;
+          document.body.appendChild(window.audioEl);
+          window.audioEl.addEventListener('ended', () => playRandomSong(true));
         }
-        audioEl.src = src;
-        audioEl.load();
-        audioEl.play().catch(()=>{});
+        window.audioEl.src = src;
+        window.audioEl.load();
+        if (!window.isMuted) {
+          window.audioEl.play().catch(()=>{});
+        }
         // Update the 3D screen texture to match the song
         if (window.updateScreenTextureForSong) {
           window.updateScreenTextureForSong(src);

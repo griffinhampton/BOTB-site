@@ -1,12 +1,8 @@
 // --- Mute button logic ---
 const muteButton = document.getElementById('mute-button');
-let isMuted = false;
-// Make audioEl global for mute logic
-window.setTimeout(() => {
-  if (typeof audioEl === 'undefined') window.audioEl = null;
-}, 0);
+window.isMuted = false;
 function setMuteState(mute) {
-  isMuted = mute;
+  window.isMuted = mute;
   if (window.audioEl) {
     window.audioEl.volume = mute ? 0 : 0.5;
     if (mute) {
@@ -25,9 +21,8 @@ function setMuteState(mute) {
     }
   }
 }
-
 if (muteButton) {
-  muteButton.addEventListener('click', () => setMuteState(!isMuted));
+  muteButton.addEventListener('click', () => setMuteState(!window.isMuted));
 }
 import * as THREE from "three";
 import { PointerLockControls } from "three/addons/controls/PointerLockControls.js";
