@@ -195,7 +195,7 @@ const PixelateShader = {
 };
 
 const pixelPass = new ShaderPass(PixelateShader);
-let pixelSize = 3;
+let pixelSize = 2.5;
 const setPixelSize = (value) => {
   const next = Math.max(1, Math.min(64, Number(value) || pixelSize));
   pixelSize = next;
@@ -237,6 +237,54 @@ let isAnimating = false;
 const allMeshes = [];
 const models = setupModelLoader(scene, allMeshes, { cameraName: "camera001" });
 
+let screenMesh = null;
+let gifTextures = {};
+
+// Utility to load an image (PNG) as a texture
+function loadImageTexture(imgUrl) {
+  const texture = new THREE.Texture();
+  const img = new window.Image();
+  img.crossOrigin = '';
+  img.src = imgUrl;
+  img.onload = () => {
+    texture.image = img;
+    texture.needsUpdate = true;
+  };
+  texture.needsUpdate = true;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  texture.encoding = THREE.sRGBEncoding;
+  texture.flipY = false;
+  return texture;
+}
+
+// Map song file to PNG file (relative to public/)
+const songToPic = {
+  'public/aphex.mp3': 'public/aphexpic.png',
+  'public/sophie.mp3': 'public/sophiepic.png',
+  'public/thegard.mp3': 'public/gardenpic.png',
+};
+
+let picTextures = {};
+Object.values(songToPic).forEach(pic => {
+  picTextures[pic] = loadImageTexture(pic);
+});
+
+function updateScreenTextureForSong(songFile) {
+  if (!screenMesh) return;
+  const pic = songToPic[songFile];
+  if (!pic) return;
+  const tex = picTextures[pic];
+  if (!tex) return;
+  if (screenMesh.material.map !== tex) {
+    screenMesh.material.map = tex;
+    screenMesh.material.needsUpdate = true;
+  }
+}
+
+// Expose to window for index.html to call
+window.updateScreenTextureForSong = updateScreenTextureForSong;
+
 models.whenReady((m) => {
   // Hide loader
   const loader = document.querySelector('.loader');
@@ -244,6 +292,12 @@ models.whenReady((m) => {
     loader.classList.add('hidden');
     setTimeout(() => loader.remove(), 500); // Remove after fade out
   }
+
+  // Find the 'screen' mesh by name (case-insensitive)
+  screenMesh = allMeshes.find(mesh => (mesh.name || '').toLowerCase() === 'screen');
+
+  // Optionally: set initial texture (blank or default GIF)
+  // updateScreenTextureForSong('public/aphex.mp3');
 
   // Hardcoded camera positions.
   cameraPositions.main.position.set(-7.30, 3.1, 0.01);
