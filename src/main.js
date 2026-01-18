@@ -23,10 +23,10 @@ const popupClose = document.getElementById("popup-close");
 
 // Popup content for each view
 const popupContents = {
-  info: "<h2>Information</h2><p>Add your info content here...</p>",
-  apply: "<h2>Apply</h2><p>Add your apply content here...</p>",
-  band1: "<h2>Band 1</h2><p>Add band 1 content here...</p>",
-  band2: "<h2>Band 2</h2><p>Add band 2 content here...</p>",
+  info: "<h2>Information</h2><h3>What is Battle of the Bands</h3><p>BOTB is a concert hosted annually by HSC at UofL, we put it on to connect the students with local artists, and to fundraise. </p><h3>Where and When</h3><p>Where: 2011 S. Brook Street, Louisville, KY 40208 </br> When: Doors at 7, music at 8</p>",
+  apply: "<h2>Apply</h2><h3>Rules to apply:</h3><ul>1: Must be 18+</ul><ul>2: Must have at least 1 UofL student affiliated with the band</ul><ul>3: Must have original music</ul><p><a style='color:red;' href='https://docs.google.com/forms/d/e/1FAIpQLSekWgFZnXyqzzD9LPQntP1RoQYZdAOee9kyvo1pSAvSEmX4rw/viewform?usp=header'>Click here to apply</a></p>",
+  band1: "<h2>Band 1</h2><p>TBA... heh...</p>",
+  band2: "<h2>Band 2</h2><p>TBA... hehe... lol..</p>",
 };
 
 // Show/hide popup based on current view
@@ -338,8 +338,8 @@ const updateButtonText = () => {
   // Apply button: shows "(back)" only when at apply view.
   applyButton.textContent = currentView === "apply" ? "(back)" : "(apply)";
   // Band buttons: show "(back)" only when at their respective views.
-  band1Button.textContent = currentView === "band1" ? "(back)" : "(band1)";
-  band2Button.textContent = currentView === "band2" ? "(back)" : "(band2)";
+  band1Button.textContent = currentView === "band1" ? "(back)" : "(TBA1)";
+  band2Button.textContent = currentView === "band2" ? "(back)" : "(TBA2)";
 };
 
 // Button click handlers.
