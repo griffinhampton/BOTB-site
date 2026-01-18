@@ -130,7 +130,7 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 2 : 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.physicallyCorrectLights = true;
+renderer.physicallyCorrectLights = !isMobile;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 0.0005; //NEVER CHANGE THIS
 renderer.shadowMap.enabled = false; // Only enabled in explore mode.
