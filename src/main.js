@@ -124,7 +124,8 @@ controls.addEventListener("unlock", () => {
 const renderer = new THREE.WebGLRenderer({ 
   antialias: !isMobile, 
   powerPreference: "high-performance",
-  alpha: true // Enable transparent background
+  alpha: true, // Enable transparent background
+  premultipliedAlpha: false // Fix black areas in bright transparent regions
 });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 2 : 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -462,11 +463,11 @@ const enterExploreMode = () => {
     // Handle movement input from pad
     movementPad.padElement.addEventListener('move', (e) => {
       const { deltaX, deltaY } = e.detail;
-      // Map pad deltas to input state (deltaY is forward/back, deltaX is strafe)
-      input.forward = deltaY < -0.3;
-      input.backward = deltaY > 0.3;
-      input.left = deltaX < -0.3;
-      input.right = deltaX > 0.3;
+      // Map pad deltas to input state (deltaY positive = push up = forward)
+      input.forward = deltaY > 0.3;
+      input.backward = deltaY < -0.3;
+      input.left = deltaX > 0.3;
+      input.right = deltaX < -0.3;
     });
     
     // Reset input state when user releases the movement pad
@@ -480,11 +481,11 @@ const enterExploreMode = () => {
     // Handle rotation input from pad
     rotationPad.padElement.addEventListener('YawPitch', (e) => {
       const { deltaX, deltaY } = e.detail;
-      // Apply rotation to camera
+      // Apply rotation to camera (reduced sensitivity)
       const euler = new THREE.Euler(0, 0, 0, 'YXZ');
       euler.setFromQuaternion(camera.quaternion);
-      euler.y -= deltaX * 0.02;
-      euler.x -= deltaY * 0.02;
+      euler.y -= deltaX * 0.006;
+      euler.x -= deltaY * 0.006;
       euler.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, euler.x));
       camera.quaternion.setFromEuler(euler);
     });
