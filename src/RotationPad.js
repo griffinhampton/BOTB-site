@@ -236,6 +236,20 @@ class RotationPad {
         this.handle.style.left = this.regionData.centerX - this.handleData.radius + 'px'
         this.handle.style.opacity = 0.1
     }
+
+    dispose() {
+        try {
+            if (this.padElement && this.padElement.parentNode) {
+                this.padElement.parentNode.removeChild(this.padElement);
+            }
+        } catch (e) {}
+
+        // Clear any repeating timeout
+        try { if (this.eventRepeatTimeout) clearTimeout(this.eventRepeatTimeout); } catch (e) {}
+        try { if (this._rafId) cancelAnimationFrame(this._rafId); } catch (e) {}
+
+        this.padElement = null;
+    }
 }
 
 

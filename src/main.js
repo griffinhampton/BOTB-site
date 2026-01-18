@@ -1,5 +1,7 @@
 import * as THREE from "three";
 import { PointerLockControls } from "three/addons/controls/PointerLockControls.js";
+import MovementPad from "./MovementPad.js";
+import RotationPad from "./RotationPad.js";
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
@@ -69,6 +71,10 @@ scene.background = null; // Transparent background
 
 // Detect mobile first to set appropriate FOV.
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+// Mobile control pads (created on demand)
+let movementPad = null;
+let rotationPad = null;
 
 // Single camera that we animate between positions.
 // Higher FOV on mobile to fill screen better and avoid black bars.
@@ -447,7 +453,36 @@ const enterExploreMode = () => {
   updateButtonVisibility();
   updateWatermarkVisibility();
   updatePopupVisibility();
-  controls.lock();
+  
+  if (isMobile) {
+    // Create mobile control pads
+    movementPad = new MovementPad(document.body);
+    rotationPad = new RotationPad(document.body);
+    
+    // Handle movement input from pad
+    movementPad.padElement.addEventListener('move', (e) => {
+      const { deltaX, deltaY } = e.detail;
+      // Map pad deltas to input state (deltaY is forward/back, deltaX is strafe)
+      input.forward = deltaY < -0.3;
+      input.backward = deltaY > 0.3;
+      input.left = deltaX < -0.3;
+      input.right = deltaX > 0.3;
+    });
+    
+    // Handle rotation input from pad
+    rotationPad.padElement.addEventListener('YawPitch', (e) => {
+      const { deltaX, deltaY } = e.detail;
+      // Apply rotation to camera
+      const euler = new THREE.Euler(0, 0, 0, 'YXZ');
+      euler.setFromQuaternion(camera.quaternion);
+      euler.y -= deltaX * 0.02;
+      euler.x -= deltaY * 0.02;
+      euler.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, euler.x));
+      camera.quaternion.setFromEuler(euler);
+    });
+  } else {
+    controls.lock();
+  }
 };
 
 const exitExploreMode = () => {
@@ -460,6 +495,24 @@ const exitExploreMode = () => {
       m.receiveShadow = false;
     }
   });
+  
+  // Remove mobile control pads if they exist
+  if (movementPad) {
+    movementPad.dispose();
+    movementPad = null;
+  }
+  if (rotationPad) {
+    rotationPad.dispose();
+    rotationPad = null;
+  }
+  
+  // Reset input state
+  input.forward = false;
+  input.backward = false;
+  input.left = false;
+  input.right = false;
+  input.jump = false;
+  
   // Return to main camera view.
   camera.position.copy(cameraPositions.main.position);
   camera.quaternion.copy(cameraPositions.main.quaternion);
@@ -487,7 +540,8 @@ const animate = () => {
   }
 
   // FPS walking movement with collision.
-  if (isExploreMode && controls.isLocked) {
+  // On mobile, we don't use pointer lock, so check isExploreMode and isMobile separately
+  if (isExploreMode && (controls.isLocked || isMobile)) {
     // Friction.
     velocity.x -= velocity.x * 10.0 * delta;
     velocity.z -= velocity.z * 10.0 * delta;

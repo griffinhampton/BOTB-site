@@ -156,6 +156,31 @@
         text-transform: uppercase;
         letter-spacing: 3px;
       }
+      
+      /* Mobile popup sizing */
+      @media (max-width: 600px) {
+        #popup-modal {
+          padding: 20px;
+          max-width: 85%;
+          width: 85%;
+          max-height: 60vh;
+        }
+        #popup-content {
+          font-size: 1rem;
+          line-height: 1.4;
+        }
+        #popup-content h2 {
+          font-size: 1.4rem;
+          margin-bottom: 15px;
+          letter-spacing: 1px;
+        }
+        #popup-close {
+          font-size: 1.5rem;
+          top: 10px;
+          right: 10px;
+        }
+      }
+      
 .loader {
   position: fixed;
   top: 50%;
