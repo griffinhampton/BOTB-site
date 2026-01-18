@@ -132,9 +132,9 @@ class MovementPad {
     }
 
     alignAndConfigPad(canvas) {
-        // Position pad 20px from left, 20px from bottom of viewport
+        // Position pad 20px from left, raised higher from bottom to avoid overlap
         this.padElement.style.left = '20px';
-        this.padElement.style.bottom = '20px';
+        this.padElement.style.bottom = '100px';
 
     // compute region metrics using viewport coordinates
     const regionRect = this.region.getBoundingClientRect();

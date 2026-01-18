@@ -469,6 +469,14 @@ const enterExploreMode = () => {
       input.right = deltaX > 0.3;
     });
     
+    // Reset input state when user releases the movement pad
+    movementPad.padElement.addEventListener('stopMove', () => {
+      input.forward = false;
+      input.backward = false;
+      input.left = false;
+      input.right = false;
+    });
+    
     // Handle rotation input from pad
     rotationPad.padElement.addEventListener('YawPitch', (e) => {
       const { deltaX, deltaY } = e.detail;
